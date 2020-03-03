@@ -88,9 +88,9 @@ int i, j, k, a;
 int kind[50];
 //double n;
 int n[50];//算選的投資組合有幾個
-int partical_num = 10;
-int generation = 10000;
-int experiment_time = 50;
+int partical_num = 1;
+int generation = 1;
+int experiment_time = 1;
 int s_stock_index = 0;//train stock num
 int test_stock_index = 0;
 
@@ -269,13 +269,13 @@ void  measure()
 		for (int j = 0; j < s_stock_index; j++) {
 
 			random = rand() / 32767.0;
-			if (random < beta[j]) {
+			/*if (random < beta[j]) {
 				partical[i][j] = 1;
 			}
-			else partical[i][j] = 0;//隨機給0或1
-									/*if (j == 0 || j == 1 || j == 2)
+			else partical[i][j] = 0;*///隨機給0或1
+									if (j == 0/* || j == 1 || j == 2*/)
 									partical[i][j] = 1;
-									else partical[i][j] = 0;*/
+									else partical[i][j] = 0;
 			if (partical[i][j] == 1)
 			{
 				stock_index[i][n[i]] = j;
