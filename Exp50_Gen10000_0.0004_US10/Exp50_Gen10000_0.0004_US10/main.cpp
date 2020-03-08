@@ -11,8 +11,8 @@ ifstream test_input_file;
 ofstream output_file;
 double all_stock[10000][10000]; //所有股票
 double test_all_stock[100][400];
-int stock_no[50]; //股票編號
-int test_stock_no[50];
+string stock_no[50]; //股票編號
+string test_stock_no[50];
 int index;
 int test_index;
 //read_file
@@ -117,7 +117,7 @@ int Gbest_n;//Gbest選到的檔數
 int Gbest_i;
 int selection_stock_no[10][50];
 int real_partical[50][10][50];
-int final_portfolio[50];
+string final_portfolio[50];
 int all_buy_paper[50];//存可買張數的陣列
 int last_test_all_buy_paper[50];
 int test_all_buy_paper[50];
@@ -160,24 +160,48 @@ double final_test_r1;
 int day_count_risk;//總體測試期計算風險天數counter
 int day_count_result;//總體測試期輸出結果天數counter
 
+double all_file_gbest_risk[100];
+double all_file_gbest_return[100];
+int all_file_gbest_num[100];
+int all_file_gbest_generation[100];
+int all_file_gbest_experiment[100];
+int all_file_gbest_appear[100];
+double all_gbest_trend_ratio[100];
+string all_file_gbest_portfolio[100][50];
+
 string AAPL[] = { "AAPL-2012.csv", "AAPL-2013.csv", "AAPL-2014.csv", "AAPL-2015.csv", "AAPL-2016.csv", "AAPL-2017.csv", "AAPL-2018.csv", "AAPL-2019.csv" };
 string AMZN[] = { "AMZN-2012.csv", "AMZN-2013.csv", "AMZN-2014.csv", "AMZN-2015.csv", "AMZN-2016.csv", "AMZN-2017.csv", "AMZN-2018.csv", "AMZN-2019.csv" };
 string BABA[] = { "BABA-2014.csv", "BABA-2015.csv", "BABA-2016.csv", "BABA-2017.csv", "BABA-2018.csv", "BABA-2019.csv" };
-string BRK[] = { "BRK-A-2012.csv", "BRK-A-2013.csv", "BRK-A-2014.csv", "BRK-A-2015.csv", "BRK-A-2016.csv", "BRK-A-2017.csv", "BRK-A-2018.csv", "BRK-A-2019.csv" };
+string BRKA[] = { "BRK-A-2012.csv", "BRK-A-2013.csv", "BRK-A-2014.csv", "BRK-A-2015.csv", "BRK-A-2016.csv", "BRK-A-2017.csv", "BRK-A-2018.csv", "BRK-A-2019.csv" };
 string FB[] = { "FB-2012.csv", "FB-2013.csv", "FB-2014.csv", "FB-2015.csv", "FB-2016.csv", "FB-2017.csv", "FB-2018.csv", "FB-2019.csv" };
 string GOOG[] = { "GOOG-2012.csv", "GOOG-2013.csv", "GOOG-2014.csv", "GOOG-2015.csv", "GOOG-2016.csv", "GOOG-2017.csv", "GOOG-2018.csv", "GOOG-2019.csv" };
 string GOOGL[] = { "GOOGL-2012.csv", "GOOGL-2013.csv", "GOOGL-2014.csv", "GOOGL-2015.csv", "GOOGL-2016.csv", "GOOGL-2017.csv", "GOOGL-2018.csv", "GOOGL-2019.csv" };
 string JNJ[] = { "JNJ-2012.csv", "JNJ-2013.csv", "JNJ-2014.csv", "JNJ-2015.csv", "JNJ-2016.csv", "JNJ-2017.csv", "JNJ-2018.csv", "JNJ-2019.csv" };
 string JPM[] = { "JPM-2012.csv", "JPM-2013.csv", "JPM-2014.csv", "JPM-2015.csv", "JPM-2016.csv", "JPM-2017.csv", "JPM-2018.csv", "JPM-2019.csv" };
 string MSFT[] = { "MSFT-2012.csv", "MSFT-2013.csv", "MSFT-2014.csv", "MSFT-2015.csv", "MSFT-2016.csv", "MSFT-2017.csv", "MSFT-2018.csv", "MSFT-2019.csv" };
-string TECHY[] = { "TCEHY-2012.csv", "TCEHY-2013.csv", "TCEHY-2014.csv", "TCEHY-2015.csv", "TCEHY-2016.csv", "TCEHY-2017.csv", "TCEHY-2018.csv", "TCEHY-2019.csv"};
+string TCEHY[] = { "TCEHY-2012.csv", "TCEHY-2013.csv", "TCEHY-2014.csv", "TCEHY-2015.csv", "TCEHY-2016.csv", "TCEHY-2017.csv", "TCEHY-2018.csv", "TCEHY-2019.csv" };
 string V[] = { "V-2012.csv", "V-2013.csv", "V-2014.csv", "V-2015.csv", "V-2016.csv", "V-2017.csv", "V-2018.csv", "V-2019.csv" };
 string XOM[] = { "XOM-2012.csv", "XOM-2013.csv", "XOM-2014.csv", "XOM-2015.csv", "XOM-2016.csv", "XOM-2017.csv", "XOM-2018.csv", "XOM-2019.csv" };
-
+string all_US_10[] = { "2012.csv", "2013.csv", "2014.csv", "2015.csv", "2016.csv", "2017.csv", "2018.csv", "2019.csv" };
+string all_US_12[] = { "2012.csv", "2013.csv", "2014.csv", "2015.csv", "2016.csv", "2017.csv", "2018.csv", "2019.csv" };
+/*美股市值前12大*/
+string BRKB[] = { "BRK.B_2012.csv", "BRK.B_2013.csv", "BRK.B_2014.csv", "BRK.B_2015.csv", "BRK.B_2016.csv", "BRK.B_2017.csv", "BRK.B_2018.csv", "BRK.B_2019.csv" };
+string CHT[] = { "CHT_2012.csv", "CHT_2013.csv", "CHT_2014.csv", "CHT_2015.csv", "CHT_2016.csv", "CHT_2017.csv", "CHT_2018.csv", "CHT_2019.csv" };
+string HD[] = { "HD_2012.csv", "HD_2013.csv", "HD_2014.csv", "HD_2015.csv","HD_2016.csv","HD_2017.csv","HD_2018.csv","HD_2019.csv" };
+string MA[] = { "MA_2012.csv","MA_2013.csv","MA_2014.csv","MA_2015.csv","MA_2016.csv","MA_2017.csv","MA_2018.csv","MA_2019.csv" };
+string PG[] = { "PG_2012.csv", "PG_2013.csv","PG_2014.csv","PG_2015.csv","PG_2016.csv","PG_2017.csv","PG_2018.csv","PG_2019.csv" };
+string SNP[] = { "SNP_2012.csv", "SNP_2013.csv", "SNP_2014.csv", "SNP_2015.csv", "SNP_2016.csv", "SNP_2017.csv", "SNP_2018.csv", "SNP_2019.csv" };
+string T[] = { "T_2012.csv", "T_2013.csv", "T_2014.csv", "T_2015.csv", "T_2016.csv", "T_2017.csv", "T_2018.csv", "T_2019.csv" };
+string TSM[] = { "TSM_2012.csv", "TSM_2013.csv", "TSM_2014.csv", "TSM_2015.csv", "TSM_2016.csv", "TSM_2017.csv", "TSM_2018.csv", "TSM_2019.csv" };
+string UND[] = { "UNH_2012.csv", "UNH_2013.csv", "UNH_2014.csv", "UNH_2015.csv", "UNH_2016.csv", "UNH_2017.csv", "UNH_2018.csv", "UNH_2019.csv" };
+string VOD[] = { "VOD_2012.csv", "VOD_2013.csv", "VOD_2014.csv", "VOD_2014.csv", "VOD_2015.csv", "VOD_2016.csv", "VOD_2017.csv", "VOD_2018.csv", "VOD_2019.csv" };
+string WMT[] = { "WMT_2012.csv", "WMT_2013.csv", "WMT_2014.csv", "WMT_2015.csv", "WMT_2016.csv", "WMT_2017.csv", "WMT_2018.csv", "WMT_2019.csv" };
+string all_US_20[] = { "20_2012.csv", "20_2013.csv", "20_2014.csv", "20_2015.csv", "20_2016.csv", "20_2017.csv", "20_2018.csv", "20_2019.csv" };
+/*美股市值前20大*/
 void read_file(int a) {
 
-	input_file.open(AAPL[a], ios::in);
-	cout << endl << AAPL[a] << endl;
+	input_file.open(BRKB[a], ios::in);
+	cout << endl << BRKB[a] << endl;
 	string line;
 	while (getline(input_file, line))
 	{
@@ -188,10 +212,10 @@ void read_file(int a) {
 		{
 			while (getline(ss, tmp, ','))
 			{
-				stringstream num;
-				num << tmp;
-				num >> stock_no[s_stock_index];//編號
-											   //cout << stock_no[s_stock_index] << endl;
+				string num;
+				num = tmp;
+				stock_no[s_stock_index] = num; //編號
+				cout << stock_no[s_stock_index] << endl;
 				s_stock_index++;
 			}
 			index++;
@@ -270,12 +294,12 @@ void  measure()
 
 			random = rand() / 32767.0;
 			/*if (random < beta[j]) {
-				partical[i][j] = 1;
+			partical[i][j] = 1;
 			}
 			else partical[i][j] = 0;*///隨機給0或1
-									if (j == 0/* || j == 1 || j == 2*/)
-									partical[i][j] = 1;
-									else partical[i][j] = 0;
+			if (j == 0 /*|| j == 1 || j == 2*/)
+				partical[i][j] = 1;
+			else partical[i][j] = 0;
 			if (partical[i][j] == 1)
 			{
 				stock_index[i][n[i]] = j;
@@ -293,44 +317,56 @@ void standardization()
 {
 	for (int i = 0; i < partical_num; i++)
 	{
+
 		share_money = initial_fund / n[i];//每次選擇後平均每檔的資金,不要刪!!!!
 		all_share_money[i] = share_money;//把每個粒子的分配資金存起來
 		remaind = initial_fund - share_money * n[i];//投資組合分配完剩下的錢
+		double fee_rate = 0.001425;
+		double tax_rate = 0.003;
 		for (int j = 0; j < n[i]; j++) {
 			all_buy_paper[j] = 0;
 			real_all_remain_fund[j] = 0;
 			for (int k = 0; k < day; k++) {
-
+				n_fund_standardization[i][j][k] = 0;
 				if (k == 0)
 				{
-					one_of_price = all_stock[stock_index[i][j]][k] * 1000 + all_stock[stock_index[i][j]][k] * 1.425;//單張價格
-					buy_papper = share_money / one_of_price;//可買張數
+					buy_papper = share_money / (all_stock[stock_index[i][j]][k] * 1000.0 + all_stock[stock_index[i][j]][k] * 1.425);//可買張數
 					all_buy_paper[j] = buy_papper;
-					all_remain_fund = share_money - one_of_price * buy_papper;//買完各股剩餘資金
+					all_remain_fund = share_money - buy_papper * all_stock[stock_index[i][j]][k] * 1000 - buy_papper * all_stock[stock_index[i][j]][k] * 1000 * fee_rate;//買完各股剩餘資金
 					real_all_remain_fund[j] = all_remain_fund;//把買完各股剩餘資金存入陣列中進行判斷
-					fee = all_stock[stock_index[i][j]][k] * buy_papper * 1.425;//手續費 v
-					n_fund_standardization[i][j][k] = share_money - fee;//資金水位 v
+					fee = all_stock[stock_index[i][j]][k] * buy_papper * 1000 * fee_rate;//手續費 v
+					n_fund_standardization[i][j][k] = share_money - all_stock[stock_index[i][j]][k] * buy_papper * 1000 * fee_rate;//資金水位 v
+																																   //n_fund_standardization[i][j][k] = share_money - fee;//資金水位 v
+
 				}
 				else
 				{
 					n_fund_standardization[i][j][k] = all_stock[stock_index[i][j]][k] * buy_papper * 1000 -
-						all_stock[stock_index[i][j]][k] * buy_papper * 4.425 + all_remain_fund;
+						all_stock[stock_index[i][j]][k] * buy_papper * 1000 * fee_rate - buy_papper * all_stock[stock_index[i][j]][k] * 1000 * tax_rate + all_remain_fund;
+
+				}
+				if (share_money < 0)
+				{
+					n_fund_standardization[i][j][k] = 0;
 				}
 			}
+
 		}
 
 		for (int k = 0; k < day; k++)
 		{
 			yi[i][k] = 0;
+			//all_total_yi[k] = 0;
 			for (int j = 0; j < n[i]; j++)
 			{
-				yi[i][k] = yi[i][k] + n_fund_standardization[i][j][k];//yi total
+				yi[i][k] += n_fund_standardization[i][j][k];//yi total
 			}
-			yi[i][k] += remaind;//v
+			yi[i][k] = yi[i][k] + remaind;//v
 			all_total_yi[k] = yi[i][k];
 		}
 	}
 }
+
 
 void test_standardization(int a)//測試期資金水位計算
 {
@@ -340,36 +376,36 @@ void test_standardization(int a)//測試期資金水位計算
 
 	for (int v = 0; v < s_stock_index; v++)
 	{
-		if (final_portfolio[v] != 0)
+		/*if (final_portfolio[v] != 0)
+		{*/
+		for (int s = 0; s < test_stock_index; s++)
 		{
-			for (int s = 0; s < test_stock_index; s++)
+			//cout << test_stock_no[s] << endl;
+			if (final_portfolio[v] == test_stock_no[s])
 			{
-				//cout << test_stock_no[s] << endl;
-				if (final_portfolio[v] == test_stock_no[s])
-				{
-					//cout << s << endl;
-					for (int k = 0; k < test_day; k++) {
-						//	test_all_stock[s][k] = 0;
-						if (k == 0)
-						{
-							test_one_of_price = test_all_stock[s][k] * 1000 + test_all_stock[s][k] * 1.425;//單張價格
-							test_buy_paper = test_share_money / test_one_of_price;//可買張數
-							test_all_buy_paper[s] = test_buy_paper;
-							test_all_remain_fund = test_share_money - test_one_of_price * test_buy_paper;//買完各股剩餘資金
-							test_real_all_remain_fund[s] = test_all_remain_fund;//把買完各股剩餘資金存入陣列中進行判斷;
-							test_fee = test_all_stock[s][k] * test_buy_paper * 1.425;//手續費 
-							test_n_fund_standardization[s][k] = test_share_money - test_fee;//資金水位 
-						}
-						else
-						{
-							test_n_fund_standardization[s][k] = test_all_stock[s][k] * test_buy_paper * 1000 -
-								test_all_stock[s][k] * test_buy_paper * 4.425 + test_all_remain_fund;
-						}
+				//cout << s << endl;
+				for (int k = 0; k < test_day; k++) {
+					//	test_all_stock[s][k] = 0;
+					if (k == 0)
+					{
+						test_one_of_price = test_all_stock[s][k] * 1000 + test_all_stock[s][k] * 1.425;//單張價格
+						test_buy_paper = test_share_money / test_one_of_price;//可買張數
+						test_all_buy_paper[s] = test_buy_paper;
+						test_all_remain_fund = test_share_money - test_one_of_price * test_buy_paper;//買完各股剩餘資金
+						test_real_all_remain_fund[s] = test_all_remain_fund;//把買完各股剩餘資金存入陣列中進行判斷;
+						test_fee = test_all_stock[s][k] * test_buy_paper * 1.425;//手續費 
+						test_n_fund_standardization[s][k] = test_share_money - test_fee;//資金水位 
+					}
+					else
+					{
+						test_n_fund_standardization[s][k] = test_all_stock[s][k] * test_buy_paper * 1000 -
+							test_all_stock[s][k] * test_buy_paper * 4.425 + test_all_remain_fund;
 					}
 				}
 			}
-
 		}
+
+		//}
 	}
 
 	for (int k = 0; k < test_day; k++)
@@ -378,16 +414,16 @@ void test_standardization(int a)//測試期資金水位計算
 
 		for (int v = 0; v < s_stock_index; v++)
 		{
-			if (final_portfolio[v] != 0)
+			/*if (final_portfolio[v] != 0)
+			{*/
+			for (int s = 0; s < test_stock_index; s++)
 			{
-				for (int s = 0; s < test_stock_index; s++)
+				if (final_portfolio[v] == test_stock_no[s])
 				{
-					if (final_portfolio[v] == test_stock_no[s])
-					{
-						test_yi[k] = test_yi[k] + test_n_fund_standardization[s][k];//yi total
-					}
+					test_yi[k] = test_yi[k] + test_n_fund_standardization[s][k];//yi total
 				}
 			}
+			//}
 		}
 
 		test_yi[k] += test_remaind;
@@ -672,7 +708,8 @@ void Gbest_stock_selection()
 			{
 				for (int s = 0; s < s_stock_index; s++)
 				{
-					final_portfolio[s] = 0;
+					final_portfolio[s] = "\0";
+					//cout << real_partical[j][i][s] << endl;
 					if (real_partical[best_experimrentime - 1][i][s] == 1)
 					{
 						final_portfolio[s] = stock_no[s];//Gbest投資組合中
@@ -688,7 +725,7 @@ void Gbest_stock_selection()
 
 void out_file(int a)
 {
-	string ouput_file = "Larry_result_" + AAPL[a].substr(0, AAPL[a].length());//輸出檔案名稱
+	string ouput_file = "Larry_result_" + BRKB[a].substr(0, BRKB[a].length());//輸出檔案名稱
 	output_file.open(ouput_file, ios::app);//檔案輸出
 	output_file << "代數" << "," << generation << endl;
 	output_file << "粒子數" << "," << partical_num << endl;
@@ -701,23 +738,24 @@ void out_file(int a)
 	output_file << "真實報酬" << "," << fixed << setprecision(15) << Gbest_yi - initial_fund << endl << endl;
 	output_file << "預期報酬" << "," << fixed << setprecision(15) << Gbest_expect_retutn << endl;
 	output_file << "風險" << "," << fixed << setprecision(15) << Gbest_daily_risk << endl;
-	output_file << "Gbest" << "," << fixed << setprecision(11) << Gbest_max << endl;
+	output_file << "Gbest" << "," << fixed << setprecision(30) << Gbest_max << endl;
 	output_file << "找到最佳解世代" << "," << best_generation << endl;
 	output_file << "找到最佳解實驗#" << "," << best_experimrentime << endl;
 	output_file << "找到最佳解次數" << "," << Gbest_num << endl << endl;
 	output_file << "投資組合檔數" << "," << Gbest_n << endl;
 	for (int s = 0; s < s_stock_index; s++)
 	{
-		if (final_portfolio[s] != 0)
+		if (final_portfolio[s] != "\0")
 		{
 			output_file << final_portfolio[s] << "(" << s << ")" << ",";
 		}
+
 	}
 	output_file << endl;
 	output_file << "Stock#" << ",";
 	for (int s = 0; s < s_stock_index; s++)
 	{
-		if (final_portfolio[s] != 0)
+		if (final_portfolio[s] != "\0")
 		{
 			output_file << final_portfolio[s] << "(" << s << ")" << ",";
 		}
@@ -774,13 +812,13 @@ void test_out_file(int a)
 	{
 		for (int v = 0; v < s_stock_index; v++)
 		{
-			if (final_portfolio[s] != 0)
+			/*if (final_portfolio[s] != 0)
+			{*/
+			if (final_portfolio[v] == test_stock_no[s])
 			{
-				if (final_portfolio[v] == test_stock_no[s])
-				{
-					output_file << test_stock_no[s] << "(" << s << ")" << ",";
-				}
+				output_file << test_stock_no[s] << "(" << s << ")" << ",";
 			}
+			//}
 		}
 	}
 	output_file << endl;
@@ -789,13 +827,13 @@ void test_out_file(int a)
 	{
 		for (int v = 0; v < s_stock_index; v++)
 		{
-			if (final_portfolio[s] != 0)
+			/*if (final_portfolio[s] != 0)
+			{*/
+			if (final_portfolio[v] == test_stock_no[s])
 			{
-				if (final_portfolio[v] == test_stock_no[s])
-				{
-					output_file << test_stock_no[s] << "(" << s << ")" << ",";
-				}
+				output_file << test_stock_no[s] << "(" << s << ")" << ",";
 			}
+			//}
 		}
 	}
 	output_file << endl;
@@ -805,14 +843,14 @@ void test_out_file(int a)
 	{
 		for (int v = 0; v < s_stock_index; v++)
 		{
-			if (final_portfolio[s] != 0)
+			/*if (final_portfolio[s] != 0)
+			{*/
+			if (final_portfolio[v] == test_stock_no[s])
 			{
-				if (final_portfolio[v] == test_stock_no[s])
-				{
-					output_file << test_all_buy_paper[s] << ",";
+				output_file << test_all_buy_paper[s] << ",";
 
-				}
 			}
+			//}
 		}
 	}
 	output_file << endl;
@@ -827,13 +865,13 @@ void test_out_file(int a)
 	{
 		for (int v = 0; v < s_stock_index; v++)
 		{
-			if (final_portfolio[s] != 0)
+			/*if (final_portfolio[s] != 0)
+			{*/
+			if (final_portfolio[v] == test_stock_no[s])
 			{
-				if (final_portfolio[v] == test_stock_no[s])
-				{
-					output_file << test_real_all_remain_fund[s] << ",";
-				}
+				output_file << test_real_all_remain_fund[s] << ",";
 			}
+			//}
 		}
 	}
 	output_file << endl;
@@ -844,13 +882,13 @@ void test_out_file(int a)
 		{
 			for (int v = 0; v < s_stock_index; v++)
 			{
-				if (final_portfolio[s] != 0)
+				/*if (final_portfolio[s] != 0)
+				{*/
+				if (final_portfolio[v] == test_stock_no[s])
 				{
-					if (final_portfolio[v] == test_stock_no[s])
-					{
-						output_file << fixed << setprecision(15) << test_n_fund_standardization[s][d] << ",";
-					}
+					output_file << fixed << setprecision(15) << test_n_fund_standardization[s][d] << ",";
 				}
+				//}
 			}
 		}
 		output_file << fixed << setprecision(15) << test_all_total_yi[d] << "," << endl;
@@ -890,6 +928,46 @@ void all_testperiod_final_result()
 	}
 
 	output_file.close();
+}
+
+void all_train_prtiod_result(int a)
+{
+	string ouput_file = "Larry_ train_Gbest_10000_10_50_0.0004.csv";//輸出檔案名稱
+	output_file.open(ouput_file, ios::app);
+
+	if (all_gbest_trend_ratio[a] != 0)
+	{
+		output_file << a + 1 << "," << all_file_gbest_num[a] << ",";
+		for (int s = 0; s < s_stock_index; s++)
+		{
+			if (all_file_gbest_portfolio[a][s] != "\0")
+			{
+				output_file << all_file_gbest_portfolio[a][s] << "(" << s << ") " << " ";
+			}
+		}
+		output_file << ",";
+		output_file << "Gbest" << "," << fixed << setprecision(20) << all_gbest_trend_ratio[a] << ",";
+		output_file << "預期報酬" << "," << fixed << setprecision(20) << all_file_gbest_return[a] << ",";
+		output_file << "風險" << "," << fixed << setprecision(20) << all_file_gbest_risk[a] << ",";
+		output_file << "最佳解實驗#" << "," << all_file_gbest_experiment[a] << ",";
+		output_file << "最佳解世代#" << "," << all_file_gbest_generation[a] << ",";
+		output_file << "最佳解出現次數" << "," << all_file_gbest_appear[a];
+		output_file << endl;
+	}
+
+	/*else if (all_gbest_trend_ratio[a] > 0)
+	{
+	output_file << a + 1 << "," << 0 << "," << 0 << ",";
+	output_file << "Gbest" << "," << 0 << ",";
+	output_file << "預期報酬" << "," << 0 << ",";
+	output_file << "風險" << "," << 0 << ",";
+	output_file << "最佳解實驗#" << "," << 0 << ",";
+	output_file << "最佳解世代#" << "," << 0 << ",";
+	output_file << "最佳解出現次數" << "," << 0;
+	output_file << endl;
+	}*/
+	output_file.close();
+
 }
 
 int main()
@@ -944,29 +1022,49 @@ int main()
 		Gbest_stock_selection();
 		for (int s = 0; s < s_stock_index; s++)
 		{
-			if (final_portfolio[s] != 0)
-			{
-				cout << final_portfolio[s] << "(" << s << ")" << endl;
-			}
+			/*if (final_portfolio[s] != 0)
+			{*/
+			cout << final_portfolio[s] << "(" << s << ")" << endl;
+			//}
 		}
-		out_file(a);//訓練期結果輸出
+		//out_file(a);
 		//test_index = 0;
 		//test_read_file(a);//測試期讀檔
-		/*if (a == 0)
+		if (a == 0)
 		{
 			test_initial_fund = initial_fund;//如果是第一個測試期檔案,則初始資金為10000000
-											 //day_index = 0;
+		}
+		if (test_all_final_fund <= 0)
+		{
+			test_initial_fund = test_initial_fund;
 		}
 		else if (a != 0)
 		{
 			test_initial_fund = test_all_final_fund;//第二個測試期檔案開始,初始資金為上一區間最後資金
-		}*/
+
+		}
 		//test_standardization(a);
 		//test_fitness();
 		//all_test_return();//總體測試期預期報酬計算
-						  //test_out_file(a);//測試期檔案輸出
+		//test_out_file(a);//測試期檔案輸出
+		all_file_gbest_risk[a] = Gbest_daily_risk;
+		all_file_gbest_return[a] = Gbest_expect_retutn;
+		all_file_gbest_num[a] = Gbest_n;
+		all_file_gbest_generation[a] = best_generation;
+		all_file_gbest_experiment[a] = best_experimrentime;
+		all_file_gbest_appear[a] = Gbest_num;
+		all_gbest_trend_ratio[a] = Gbest_max;
+		for (int s = 0; s < s_stock_index; s++)
+		{
+			if (final_portfolio[s] != "/0")
+			{
+				all_file_gbest_portfolio[a][s] = final_portfolio[s];
+			}
+		}
+		//all_train_prtiod_result(a);
 	}
 	//all_test_risk();//總體測試期風險計算
 	//all_testperiod_final_result();//總體測試期結果輸出
+	system("pause");
 	return 0;
 }
